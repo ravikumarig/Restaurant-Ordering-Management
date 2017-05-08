@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Manage Menu Items
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        <h4>Manage Menu Items</h4>
+
+        <h:panelGroup layout="block" class="cartCss">
+            <h:form>
+                <h:commandButton action="#{adminPortalController.goToAddNewMenuItem()}" value="Add New Menu Item" class="btn btn-info"/>
+            </h:form>
+        </h:panelGroup>
+
+        <br/>
+
+        <!-- This is a table representation of menu items when logged in as a Admin --> 
+        <h:dataTable rendered="#{loginController.admin}" class="table table-hover table-responsive" value="#{adminPortalController.allMenuItems}" 
+                     var="menuItems"
+                     style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Item ID" />                        
+                </f:facet>
+                <h:outputText value="#{menuItems.itemId}" />                
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Item Name" />
+                </f:facet>
+                <h:outputText value="#{menuItems.itemName}" />
+            </h:column>
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{adminPortalController.viewMenuItems(menuItems)}" value="View "/>
+                    <h:commandLink action="#{adminPortalController.updateMenuItems(menuItems)}" value="Update "/>
+                    <h:commandLink action="#{adminPortalController.deleteMenuItems(menuItems)}" value="Delete"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="itmd4515PU_TEST" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Customer</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.security.User</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Cheque</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.LineItem</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Manager</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.MenuItem</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.security.Group</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/itmd4515?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="itmd4515"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="itmd4515"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      <!--The below properties are for generating the Drop and Create DDL at the root of the project file -->
+      <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.scripts.create-target" value="sampleCreate.ddl"/>
+      <property name="javax.persistence.schema-generation.scripts.drop-target" value="sampleDrop.ddl"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

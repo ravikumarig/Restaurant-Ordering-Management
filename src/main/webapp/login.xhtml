@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/templates/publicTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        Login Page
+        <a id="javadoc" href="/rindiragangaram-fp/javadoc/apidocs/index.html" target="_blank" style="float: right;font-size:60%;color: whitesmoke">JavaDoc</a>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:panelGroup layout="block" class="container">
+            <h1>User Authentication</h1>
+
+            <h:form>
+                <h:panelGroup styleClass="#{j_username.valid ? 'form-group' : 'form-group has-error'}" layout="block" >
+                    <h:outputLabel class="control-label" for="j_username" value="Username" />
+                    <h:inputText binding="#{j_username}" class="form-control" id="j_username" value="#{loginController.userName}" />
+                    <h:message for="j_username" style=" color: red" />
+                </h:panelGroup>
+                <h:panelGroup styleClass="#{j_password.valid ? 'form-group' : 'form-group has-error'}" layout="block" >
+                    <h:outputLabel class="control-label" for="j_password" value="Password" />
+                    <h:inputSecret binding="#{j_password}" class="form-control" id="j_password" value="#{loginController.password}" />
+                    <h:message for="j_password" style=" color: red" />
+                </h:panelGroup>
+                <h:commandButton class="btn btn-success" value="Login" action="#{loginController.doLogin()}" />
+            </h:form>
+        </h:panelGroup>
+        
+        <br/>
+        
+        <h:panelGroup layout="block" class="container">
+            <h4 style="font-style: italic" >New Customer ?   
+                <a href="#{request.contextPath}/signUp.xhtml"> Sign Up!</a>
+            </h4> 
+        </h:panelGroup>
+
+    </ui:define>
+
+</ui:composition>

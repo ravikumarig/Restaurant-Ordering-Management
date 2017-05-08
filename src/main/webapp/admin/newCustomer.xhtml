@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>    
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->        
+        <title>Add New Customer</title>
+
+        <h:outputStylesheet name="css/style.css" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style>
+            body {
+                background-image: url("#{request.contextPath}/resources/images/banner-bg.jpg");
+                
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:panelGroup layout="block" class="container" style="background-color: #ff7f7f; border-radius: 2em">
+            <h:panelGroup rendered="#{not facesContext.validationFailed and not empty facesContext.messageList}" layout="block" 
+                          class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h:messages showDetail="false" showSummary="true" globalOnly="true"/>
+            </h:panelGroup>
+
+            <h1>Add New Customer</h1>
+
+            <h:form class="form-horizontal">
+
+                <h:panelGroup layout="block" class="form-group">
+                    <h:outputLabel for="customerUName1" value="Username " class="control-label col-sm-4"/>
+                    <h:panelGroup class="col-sm-4">
+                        <h:inputText id="customerUName1" value="#{adminPortalController.user.userName}" class="form-control"
+                                     validatorMessage="Must be 3 to 15 characters in length, lowercase alphabets and numbers only">
+                            <f:validateRequired />
+                            <f:validateRegex pattern="^[a-z0-9]{3,15}$" />
+                        </h:inputText>
+                        <h:message for="customerUName1" style="color: red" />
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="newCusName" value="Name" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >
+                        <h:inputText class="form-control" id="newCusName" value="#{adminPortalController.customer.customerName}"
+                                     validatorMessage="Must be 3 to 20 characters in length, allows alphabets, numbers and white space">
+                            <f:validateRequired />
+                            <f:validateRegex pattern="[a-zA-Z ]{3,20}"/>
+                        </h:inputText>
+                        <h:message for="newCusName" style="color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="newCusEmail" value="Email" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >
+                        <h:inputText class="form-control" id="newCusEmail" value="#{adminPortalController.customer.customerEmail}"
+                                     validatorMessage="Invalid email id">
+                            <f:validateRequired />
+                           
+                        </h:inputText>
+                        <h:message for="newCusEmail" style="color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="newCusPass" value="Password" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >
+                        <h:inputSecret redisplay="true" class="form-control" id="newCusPass" value="#{adminPortalController.user.password}" 
+                                       validatorMessage="Password must be 3 to 15 characters in length and allows @#-_$%">
+                            <f:validateRequired />
+                            <f:validateRegex pattern="[a-zA-Z0-9-_@#$%]{3,15}" />
+                        </h:inputSecret>
+                        <h:message for="newCusPass" style="color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="newCusDOB" value="Date Of Birth (MM/dd/yyyy)" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >  
+                        <p:calendar id="newCusDOB" value="#{adminPortalController.customer.dateOfBirth}" pattern="MM/dd/yyyy" 
+                                    navigator="true" yearRange="c-40:c+40" validatorMessage="Date must be in the format MM/dd/yyyy">
+                            <f:convertDateTime type="date" dateStyle="short" />
+                            <f:validateRequired />
+                            <h:message for="newCusDOB" style="color: red"/>
+                        </p:calendar>                        
+                    </h:panelGroup>                  
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" class="cartCss" >
+                    <h:commandButton  action="#{adminPortalController.addNewCustomer()}" value="Add" class="btn btn-success" style="width: 100px"/>
+                    &nbsp;
+                    &nbsp;                  
+                    <h:link outcome="/admin/welcome.xhtml" value="Cancel" class="btn btn-primary" style="width: 100px" />
+
+                </h:panelGroup>
+
+            </h:form>
+
+
+
+        </h:panelGroup>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </h:body>
+
+</html>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Administrator Home-Page
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome - #{loginController.remoteUser} !
+
+        <h:panelGroup layout="block" class="cartCss">
+            <h:form>
+                <h:commandButton action="#{adminPortalController.goToAddNewCustomerPage()}" value="Add New Customer" class="btn btn-info"/>
+            </h:form>
+        </h:panelGroup>
+
+        <h3>Customer Information</h3>
+
+        <!-- This is a table representation of customer details when logged in as a Admin --> 
+        <h:dataTable rendered="#{loginController.admin}" class="table table-hover table-responsive" value="#{adminPortalController.allCustomers}" 
+                     var="customer" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />                        
+                </f:facet>
+                <h:outputText value="#{customer.customerId}" />                
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer Name" />
+                </f:facet>
+                <h:outputText value="#{customer.customerName}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{customer.customerEmail}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date of Birth" />
+                </f:facet>
+                <h:outputText value="#{customer.dateOfBirth}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{adminPortalController.updateCustomer(customer)}" value="Manage Customer "/>
+
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+        <h:panelGroup layout="block" class="cartCss">
+            <h:form>
+                <h:commandButton action="#{adminPortalController.goToAddNewManagerPage()}" value="Add New Manager" class="btn btn-info"/>
+            </h:form>
+        </h:panelGroup>
+
+        <h3>Manager Information</h3>
+
+        <!-- This is a table representation of manager details when logged in as a Admin --> 
+        <h:dataTable rendered="#{loginController.admin}" class="table table-hover table-responsive" value="#{adminPortalController.allManagers}"
+                     var="manager" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Manager ID" />                        
+                </f:facet>
+                <h:outputText value="#{manager.managerId}" />                
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Manager Name" />
+                </f:facet>
+                <h:outputText value="#{manager.managerName}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{manager.managerEmail}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date of Birth" />
+                </f:facet>
+                <h:outputText value="#{manager.dateOfBirth}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{adminPortalController.manageManager(manager)}" value="Manage Manager "/>                    
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+        <h:messages style="color: red" />
+
+    </ui:define>
+
+</ui:composition>

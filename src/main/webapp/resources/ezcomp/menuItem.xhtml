@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="menuItem" required="true" type="edu.iit.sat.itmd4515.rindiragangaram.model.MenuItem" />
+        <cc:attribute name="readonly" required="false" type="java.lang.Boolean" default="true"/>
+        <cc:attribute name="updateAction" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="cancelOutcome" required="false" type="java.lang.String" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <h:form class="form-horizontal" >
+            <h:panelGroup layout="block" class="form-group">
+                <h3>  <h:outputLabel style="width: 290px; text-align: left" for="menuId" value="Item ID: #{cc.attrs.menuItem.itemId}" 
+                               class="control-label col-sm-4" />  </h3>
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputHidden class="form-control"  id="menuId" value="#{cc.attrs.menuItem.itemId}" />
+                    <h:message for="menuId" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <br/>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel for="itemName" value="Item Name" class="control-label col-sm-4"/>
+                <h:panelGroup class="col-sm-4">
+                    <h:inputText id="itemName" value="#{cc.attrs.menuItem.itemName}" class="form-control" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Item Name is required">
+                        <f:validateRequired /> 
+                    </h:inputText>
+                    <h:message for="itemName" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="itemCategory" value="Item Category" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="itemCategory" value="#{cc.attrs.menuItem.category}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Item Category is required">
+                        <f:validateRequired /> 
+                    </h:inputText>
+                    <h:message for="itemCategory" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="cost" value="Cost ($)" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="cost" value="#{cc.attrs.menuItem.cost}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Cost is required">
+                        <f:validateRequired />
+                    </h:inputText>
+                    <h:message for="cost" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="dateAdded" value="Date Added" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <p:calendar id="dateAdded" value="#{cc.attrs.menuItem.dateAdded}" pattern="MM/dd/yyyy" 
+                                readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                navigator="true" yearRange="c-40:c+40" />
+                    <h:message for="dateAdded" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="cartCss" >
+                <h:commandButton  rendered="#{not cc.attrs.readonly}" action="#{cc.attrs.updateAction}" value="Update" class="btn btn-success" style="width: 100px" />
+                &nbsp;
+                &nbsp;
+                <h:link outcome="#{cc.attrs.cancelOutcome}" value="Back" class="btn btn-primary" style="width: 100px" />
+            </h:panelGroup>
+            <br/>
+        </h:form>
+
+    </cc:implementation>
+</html>

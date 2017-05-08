@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/templates/restrictedAccessTemplate.xhtml">
+
+    <ui:define name="title">
+        Home - Indian Curry House
+    </ui:define>
+
+    <ui:define name="head">       
+    </ui:define>
+
+    <ui:define name="content">
+        <h4>Welcome to Indian Curry House, #{loginController.remoteUser} !</h4>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Manage Line-Item/Cheque
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h4>Below are the Cheque requests and their associated Line-Items</h4>
+        <br/>
+        <h3>Requested Cheques</h3>
+
+        <h:panelGroup rendered="#{managerPortalController.chequesWhichAreOnStatusActive.size() == 0}">
+            <h5 style="color: red; font-weight: 700">There are no Requested Cheques at the moment !</h5>
+        </h:panelGroup>
+
+        <!-- This is a table representation of Requested cheque details when logged in as a MANAGER --> 
+        <h:dataTable rendered="#{managerPortalController.chequesWhichAreOnStatusActive.size() != 0}" 
+                     class="table table-hover table-responsive" 
+                     value="#{managerPortalController.chequesWhichAreOnStatusActive}" 
+                     var="actCheque" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill ID" />                        
+                </f:facet>
+                <h:outputText value="#{actCheque.billId}" />           
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill Amount ($)" />
+                </f:facet>
+                <h:outputText value="#{actCheque.billAmount}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill Date" />
+                </f:facet>
+                <h:outputText value="#{actCheque.billGeneratedDate}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Transaction ID" />
+                </f:facet>
+                <h:outputText value="#{actCheque.transactionId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />
+                </f:facet>
+                <h:outputText value="#{actCheque.customer.customerId}" />
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandLink value="Close Cheque" action="#{managerPortalController.closeCheque(actCheque)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>        
+
+
+        <h3>Line-Items associated with the above Requested Cheque</h3>
+
+        <h:panelGroup rendered="#{managerPortalController.lineItemByStatusAsBillRequested.size() == 0}">
+            <h5 style="color: red; font-weight: 700">There are no Line-Items at the moment !</h5>
+        </h:panelGroup>
+
+        <!-- This is a table representation of Active line items details when logged in as a MANAGER --> 
+        <h:dataTable rendered="#{managerPortalController.lineItemByStatusAsBillRequested.size() != 0}" 
+                     class="table table-hover table-responsive" 
+                     value="#{managerPortalController.lineItemByStatusAsBillRequested}" 
+                     var="actLineItems" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Order ID" />                        
+                </f:facet>
+                <h:outputText value="#{actLineItems.orderId}" />           
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Order Amount ($)" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.orderAmount}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Table No" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.tableNo}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date Ordered" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.orderDate}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.customer.customerId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Item ID" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.menuItems.itemId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Transaction ID" />
+                </f:facet>
+                <h:outputText value="#{actLineItems.transId}" />
+            </h:column>
+        </h:dataTable>
+
+        <br/>
+
+        <h:form>
+            <h:panelGroup layout="block" class="container">
+                <h:commandButton value="Back" action="/manager/welcome.xhtml" class="btn btn-primary" />
+            </h:panelGroup>
+        </h:form>
+
+        <br/>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+
+        <ui:insert name="head">Default header content</ui:insert>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->   
+
+        <style>
+            body {
+                background-image: url("#{request.contextPath}/resources/images/banner-bg.jpg");
+                
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:panelGroup layout="block" class="container" style="background-color: #ff7f7f; border-radius: 2em">
+
+            <!-- Static navbar -->
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Indian Curry House</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="#{fn:startsWith(view.viewId, '/welcome.xhtml') ? 'active' : ''}">
+                                <h:link outcome="/welcome.xhtml" value="Home" />
+                            </li>
+
+                            <!-- Customer Only View-->
+                            <ui:fragment rendered="#{loginController.customer}" >
+                                <li class="#{fn:startsWith(view.viewId, '/customer/welcome') ? 'active' : ''}">
+                                    <h:link outcome="/customer/welcome.xhtml" value="Customer View" />
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Customer Options<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#{request.contextPath}/customer/viewMenu.xhtml">View Menu</a></li>
+                                        <li><a href="#{customerPortalController.goToActiveOrdersPage()}" >My Active Order</a></li>
+                                        <li><a href="#{request.contextPath}/customer/pastPaymentOrder.xhtml">Past Payments/Orders</a></li>
+                                    </ul>
+                                </li>
+                            </ui:fragment>
+
+                            <!-- Manager Only View-->
+                            <ui:fragment rendered="#{loginController.manager}" >
+                                <li class="#{fn:startsWith(view.viewId, '/manager/welcome') ? 'active' : ''}">
+                                    <h:link outcome="/manager/welcome.xhtml" value="Manager View" />
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manager Options<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#{request.contextPath}/manager/manageLineItemCheque.xhtml">Manage Line-Item/Cheque</a></li>
+                                        <li><a href="#{request.contextPath}/manager/closedCheques.xhtml">Cheques Closed By You</a></li>
+                                    </ul>
+                                </li>
+                            </ui:fragment>
+
+                            <!-- Admin Only View-->
+                            <ui:fragment rendered="#{loginController.admin}" >
+                                <li class="#{fn:startsWith(view.viewId, '/admin/welcome') ? 'active' : ''}">
+                                    <h:link outcome="/admin/welcome.xhtml" value="Admin View" />
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Options<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#{request.contextPath}/admin/manageMenuItems.xhtml">Manage Menu Items</a></li>
+                                    </ul>
+                                </li>
+                            </ui:fragment>
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li> <h:form> <h:commandButton class="navbar-btn btn btn-warning btn-xs " action="#{loginController.doLogout()}" value="Logout" style="width: 50px" /> </h:form> </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </nav>
+
+            <h:panelGroup rendered="#{not facesContext.validationFailed and not empty facesContext.messageList}" layout="block" class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h:messages showDetail="false" showSummary="true" globalOnly="true"/>
+            </h:panelGroup>
+
+            <h1><ui:insert name="title">Default Title</ui:insert></h1>
+
+            <ui:insert name="content">Default Content</ui:insert> 
+
+        </h:panelGroup>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    </h:body>
+</html>
+

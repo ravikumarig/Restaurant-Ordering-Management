@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Past Payments/Orders
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h4>Below are the your payment history and their associated line-items</h4>
+        <br/>
+        <h3>Past Cheques</h3>
+
+        <h:panelGroup rendered="#{customerPortalController.chequesWhichAreOnStatusInactiveAndCustomerId.size() == 0}">
+            <h5 style="color: red; font-weight: 700">There are no Past Cheques at the moment !</h5>
+        </h:panelGroup>
+
+        <!-- This is a table representation of Requested cheque details when logged in as a MANAGER --> 
+        <h:dataTable rendered="#{customerPortalController.chequesWhichAreOnStatusInactiveAndCustomerId.size() != 0}" 
+                     class="table table-hover table-responsive" 
+                     value="#{customerPortalController.chequesWhichAreOnStatusInactiveAndCustomerId}" 
+                     var="pastCheque" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill ID" />                        
+                </f:facet>
+                <h:outputText value="#{pastCheque.billId}" />           
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill Amount ($)" />
+                </f:facet>
+                <h:outputText value="#{pastCheque.billAmount}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bill Date" />
+                </f:facet>
+                <h:outputText value="#{pastCheque.billGeneratedDate}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Transaction ID" />
+                </f:facet>
+                <h:outputText value="#{pastCheque.transactionId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />
+                </f:facet>
+                <h:outputText value="#{pastCheque.customer.customerId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Manager ID" />
+                </f:facet>
+                <h:outputText value="#{pastCheque.managerBill.managerId}" />
+            </h:column>
+
+        </h:dataTable>        
+
+
+        <h3>Line-Items associated with the above payment history</h3>
+
+        <h:panelGroup rendered="#{customerPortalController.lineItemByStatusAsBilledAndCustomerId.size() == 0}">
+            <h5 style="color: red; font-weight: 700">There are no Line-Items at the moment !</h5>
+        </h:panelGroup>
+
+        <!-- This is a table representation of Active line items details when logged in as a MANAGER --> 
+        <h:dataTable rendered="#{customerPortalController.lineItemByStatusAsBilledAndCustomerId.size() != 0}" 
+                     class="table table-hover table-responsive" 
+                     value="#{customerPortalController.lineItemByStatusAsBilledAndCustomerId}" 
+                     var="pastLineItems" style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Order ID" />                        
+                </f:facet>
+                <h:outputText value="#{pastLineItems.orderId}" />           
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Order Amount ($)" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.orderAmount}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Table No" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.tableNo}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date Ordered" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.orderDate}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.customer.customerId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Item ID" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.menuItems.itemId}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Transaction ID" />
+                </f:facet>
+                <h:outputText value="#{pastLineItems.transId}" />
+            </h:column>
+        </h:dataTable>
+
+        <br/>
+
+        <h:form>
+            <h:panelGroup layout="block" class="container">
+                <h:commandButton value="Back" action="/customer/welcome.xhtml" class="btn btn-primary" />
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+    
+     <br/>
+
+</ui:composition>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Menu Items
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGroup layout="block" class="cartCss">
+                <h:outputText value="You have #{customerPortalController.cartCount} items in your cart" id="cartSize" style="font-weight: bold" /> 
+                &nbsp;
+                &nbsp;
+                <h:commandButton action="#{customerPortalController.viewCart()}" value="View Cart" class="btn btn-success"/>
+            </h:panelGroup>
+
+            <br />
+            
+            <h:dataTable class="table table-hover table-responsive" 
+                         value="#{customerPortalController.allMenuItems}" 
+                         var="menu" style="background-color: #f9f9c7; border-radius: 1em">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item ID" />
+                    </f:facet>
+                    <h:outputText value="#{menu.itemId}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Name" />
+                    </f:facet>
+                    <h:outputText value="#{menu.itemName}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Category" />
+                    </f:facet>
+                    <h:outputText value="#{menu.category}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cost ($)" />
+                    </f:facet>
+                    <h:outputText value="#{menu.cost}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Quantity" />
+                    </f:facet>
+                    <h:inputText id="item_quantity" binding="#{input1}" />
+                    <h:message for="item_quantity" style="color: red" />
+                </h:column>
+                <h:column>
+                    <h:commandLink action="#{customerPortalController.addToCart(menu,input1.value)}" value="Add to Cart" />
+                </h:column>
+            </h:dataTable>
+            
+            <br /> 
+            
+            <h:panelGroup layout="block" class="container">
+                <h:commandButton value="Back" action="/customer/welcome.xhtml" class="btn btn-primary" />
+            </h:panelGroup>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

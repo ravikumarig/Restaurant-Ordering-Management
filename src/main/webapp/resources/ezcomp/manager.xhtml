@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="manager" required="true" type="edu.iit.sat.itmd4515.rindiragangaram.model.Manager" />
+        <cc:attribute name="readonly" required="false" type="java.lang.Boolean" default="true"/>
+        <cc:attribute name="updateAction" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="deleteAction" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="cancelOutcome" required="false" type="java.lang.String" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <h:form class="form-horizontal" style="text-align: left">
+            
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel style="width: 290px; text-align: left" for="managerId" value="Manager ID: #{cc.attrs.manager.managerId}" 
+                               class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputHidden class="form-control"  id="managerId" value="#{cc.attrs.manager.managerId}" />
+                    <h:message for="managerId" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel style="width: 290px; text-align: left" for="managerUName" value="Manager Username: #{cc.attrs.manager.user.userName}" 
+                               class="control-label col-sm-4"/>
+                <h:panelGroup class="col-sm-4">
+                    <h:inputHidden id="managerUName" value="#{cc.attrs.manager.user.userName}" class="form-control"/>
+                    <h:message for="managerUName" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="managerName" value="Manager Name" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="managerName" value="#{cc.attrs.manager.managerName}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Manager Name is required">
+                        <f:validateRequired /> 
+                    </h:inputText>
+                    <h:message for="managerName" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="managerEmail" value="Manager Email" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="managerEmail" value="#{cc.attrs.manager.managerEmail}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Email is required">
+                        <f:validateRequired />
+                    </h:inputText>
+                    <h:message for="managerEmail" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="managerPass" value="Manager Password" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputSecret redisplay="true" class="form-control" id="managerPass" value="#{cc.attrs.manager.user.password}" 
+                                   readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                   validatorMessage="Password is required">
+                        <f:validateRequired />
+                    </h:inputSecret>
+                    <h:message for="managerPass" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="managerDOB" value="Manager Date Of Birth" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >  
+                    <p:calendar id="managerDOB" value="#{cc.attrs.manager.dateOfBirth}" pattern="MM/dd/yyyy" 
+                                readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                navigator="true" yearRange="c-40:c+40" />
+                    <h:message for="managerDOB" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="cartCss" >
+                <h:commandButton  action="#{cc.attrs.updateAction}" value="Update" class="btn btn-success" style="width: 100px"/>
+                &nbsp;
+                &nbsp;
+                <h:commandButton  rendered="#{loginController.admin}" action="#{cc.attrs.deleteAction}" value="Delete" class="btn btn-success" style="width: 100px"/>
+                &nbsp;
+                &nbsp;
+                <h:link outcome="#{cc.attrs.cancelOutcome}" value="Cancel" class="btn btn-primary" style="width: 100px" />
+            </h:panelGroup>
+            <br/>
+        </h:form>
+
+    </cc:implementation>
+</html>

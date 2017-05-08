@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        View Cart
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form>          
+            
+            <h:panelGroup layout="block" class="cartCss" rendered="#{customerPortalController.cartCount > 0}">
+                <h:outputText value="Please choose the Table number you are seated in: " 
+                              style="font-weight: bold" 
+                              class="dropdown" /> 
+                &nbsp;
+                <h:selectOneMenu id="tableNo" binding="#{selectedTable}">
+                    <f:selectItem itemValue="Choose one" itemLabel="Choose one" />
+                    <f:selectItem itemValue="Table 1" itemLabel="Table 1" />
+                    <f:selectItem itemValue="Table 2" itemLabel="Table 2" />
+                    <f:selectItem itemValue="Table 3" itemLabel="Table 3" />
+                    <f:selectItem itemValue="Table 4" itemLabel="Table 4" />
+                    <f:selectItem itemValue="Table 5" itemLabel="Table 5" />
+                    <f:selectItem itemValue="Table 6" itemLabel="Table 6" />
+                    <f:selectItem itemValue="Table 7" itemLabel="Table 7" />
+                    <f:selectItem itemValue="Table 8" itemLabel="Table 8" />
+                    <f:selectItem itemValue="Table 9" itemLabel="Table 9" />
+                    <f:selectItem itemValue="Table 10" itemLabel="Table 10" />
+                </h:selectOneMenu>
+
+                <h:message for="tableNo" style="color: red" />
+            </h:panelGroup>
+
+
+            <br />
+            <h:panelGroup layout="block" rendered="#{customerPortalController.cartCount > 0}">            
+            <h3>Below are the Items in your Cart..</h3>
+
+            <h:dataTable id="cartTable" class="table table-hover table-responsive" 
+                         value="#{customerPortalController.itemsFromCart}" 
+                         var="viewCart" binding="#{bindedCart}"
+                         style="background-color: #f9f9c7; border-radius: 1em">
+
+                <h:column>
+                    <f:facet name="header" >
+                        <h:outputText value="Item Name" /> 
+                    </f:facet>
+                    <h:outputText value="#{viewCart.itemName}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header" >
+                        <h:outputText value="Quantity" />
+                    </f:facet>
+                    <h:outputText value="#{viewCart.quantity}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header" >
+                        <h:outputText value="Cost ($)" />
+                    </f:facet>
+                    <h:outputText value="#{viewCart.cost * viewCart.quantity}" />
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Remove from Cart" action="#{customerPortalController.removeItemsFromCart(viewCart)}" />
+                </h:column>
+
+                <h:message for="carTable" style="color: red" /> 
+            </h:dataTable>
+            
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="cartCss">
+                <h:commandButton value="Place Order" action="#{customerPortalController.placeOrder(bindedCart.value, selectedTable.value)}" 
+                                 class="btn btn-success" rendered="#{customerPortalController.cartCount > 0}" />
+            </h:panelGroup>
+
+            <br />
+
+            <h:panelGroup layout="block" class="container">
+                <h:commandButton value="Back" action="/customer/viewMenu.xhtml" class="btn btn-primary" />
+            </h:panelGroup>
+            <br/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        My Active Orders
+    </ui:define>
+
+    <ui:define name="head">       
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="actOrds">
+
+            <h:panelGroup rendered="#{customerPortalController.activeOrderSize == 0}">
+                <h4>There are no active orders at this moment.</h4>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{customerPortalController.activeOrderSize != 0}">
+
+                <h4>Below are the active orders, that are unbilled!</h4>
+
+                <h:dataTable id="activeOrderTable"
+                             class="table table-hover table-responsive" var="viewActiveOrders" 
+                             value="#{customerPortalController.activeOrders}" 
+                             style="background-color: #f9f9c7; border-radius: 1em">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Order ID" />
+                        </f:facet>
+                        <h:outputText value="#{viewActiveOrders.orderId}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Order Amount" />
+                        </f:facet>
+                        <h:outputText value="#{viewActiveOrders.orderAmount}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Order Date" />
+                        </f:facet>
+                        <h:outputText value="#{viewActiveOrders.orderDate}">
+                            <f:convertDateTime type="date" dateStyle="medium" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quantiy" />
+                        </f:facet>
+                        <h:outputText value="#{viewActiveOrders.quantity}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Item Name" />
+                        </f:facet>
+                        <h:outputText value="#{viewActiveOrders.menuItems.itemName}" />
+                    </h:column>     
+                    <h:message for="activeOrderTable" style="color: red" />            
+                </h:dataTable>
+
+                <h:panelGroup layout="block" class="cartCss">
+                    <h:commandButton id="requestBill" value="Request for Bill"  
+                                     class="btn btn-success" action="#{customerPortalController.requestForBillAmount()}"/>
+                </h:panelGroup>
+
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="container">
+                <h4></h4>
+            </h:panelGroup>
+
+            <h:panelGroup layout="span" class="cartCss"  rendered="#{customerPortalController.finalBillAmount != 0}">
+                <h5 style="font-weight: 700; background-color: #99ff99; margin: 0 auto; width: 200px">Your Bill Amount is $ 
+                    <h:outputText class="" value="#{customerPortalController.finalBillAmount}" /> </h5>
+            </h:panelGroup> 
+
+            <h:link outcome="/customer/welcome.xhtml" value="Back" class="btn btn-primary" style="width: 100px" />
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

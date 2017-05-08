@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="itmd4515PU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/itmd4515DS</jta-data-source>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Customer</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.LineItem</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Manager</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.MenuItem</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.security.Group</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.security.User</class>
+    <class>edu.iit.sat.itmd4515.rindiragangaram.model.Cheque</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <!-- The SQL file will used when the app is launched to seed data -->
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/insert.sql"/>
+    </properties>
+  </persistence-unit>
+</persistence>

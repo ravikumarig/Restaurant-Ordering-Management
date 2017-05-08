@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <security-constraint>
+        <display-name>Customer Security Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Customer Content</web-resource-name>
+            <description>Customer Content</description>
+            <url-pattern>/customer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Customer only</description>
+            <role-name>CUST_ROLE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Manager Security Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Manager Content</web-resource-name>
+            <description>Manager Content</description>
+            <url-pattern>/manager/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Manager only</description>
+            <role-name>MANG_ROLE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Common Access Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Common</web-resource-name>
+            <description>Everyone can access with credentials</description>
+            <url-pattern>/welcome.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Common access</description>
+            <role-name>CUST_ROLE</role-name>
+            <role-name>MANG_ROLE</role-name>
+            <role-name>ADMIN_ROLE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Admin Security Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Manager Content</web-resource-name>
+            <description>Manager Content</description>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Admin only</description>
+            <role-name>ADMIN_ROLE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>itmd4515Realm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>This is a customer role.</description>
+        <role-name>CUST_ROLE</role-name>
+    </security-role>
+    <security-role>
+        <description>This is a manager role.</description>
+        <role-name>MANG_ROLE</role-name>
+    </security-role>
+    <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
+    </welcome-file-list>
+    <security-role>
+        <description>Administrator role</description>
+        <role-name>ADMIN_ROLE</role-name>
+    </security-role>
+</web-app>

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>    
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->        
+        <title>Add New Menu Item</title>
+
+        <h:outputStylesheet name="css/style.css" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style>
+            body {
+                background-image: url("#{request.contextPath}/resources/images/banner-bg.jpg");
+                
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:panelGroup layout="block" class="container" style="background-color: #ff7f7f; border-radius: 2em">
+            <h:panelGroup rendered="#{not facesContext.validationFailed and not empty facesContext.messageList}" layout="block" 
+                          class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h:messages showDetail="false" showSummary="true" globalOnly="true"/>
+            </h:panelGroup>
+
+            <h1>Add New Menu Item</h1>
+
+            <h:form class="form-horizontal">
+
+                <h:panelGroup layout="block" class="form-group">
+                    <h:outputLabel for="itemId" value="Item ID " class="control-label col-sm-4"/>
+                    <h:panelGroup class="col-sm-4">
+                        <h:inputText id="itemId" value="#{adminPortalController.menuItem.itemId}" class="form-control"
+                                     validatorMessage="An Integer value is required">
+                            <f:validateRequired />
+                        </h:inputText>
+                        <h:message for="itemId" style="color: red" />
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="itemName" value="Item Name" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >
+                        <h:inputText class="form-control" id="itemName" value="#{adminPortalController.menuItem.itemName}"
+                                     validatorMessage="Must be 3 to 30 characters in length, allows alphabets, numbers and white space">
+                            <f:validateRequired />
+                            <f:validateRegex pattern="[a-zA-Z ]{3,30}"/>
+                        </h:inputText>
+                        <h:message for="itemName" style="color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="category" value="Category" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >
+                        <h:inputText class="form-control" id="category" value="#{adminPortalController.menuItem.category}"
+                                     validatorMessage="Must be 3 to 30 characters in length, allows alphabets, numbers and white space">
+                            <f:validateRequired />
+                            <f:validateRegex pattern="[a-zA-Z ]{3,30}"/>
+                        </h:inputText>
+                        <h:message for="category" style="color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group">
+                    <h:outputLabel for="cost" value="Cost ($) " class="control-label col-sm-4"/>
+                    <h:panelGroup class="col-sm-4">
+                        <h:inputText id="cost" value="#{adminPortalController.menuItem.cost}" class="form-control"
+                                     validatorMessage="An Integer value is required">
+                            <f:validateRequired />
+                        </h:inputText>
+                        <h:message for="cost" style="color: red" />
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group" >
+                    <h:outputLabel for="dateAdded" value="Date Added (MM/dd/yyyy)" class="control-label col-sm-4" />
+                    <h:panelGroup class="col-sm-4" >  
+                        <p:calendar id="dateAdded" value="#{adminPortalController.menuItem.dateAdded}" pattern="MM/dd/yyyy" 
+                                    navigator="true" yearRange="c-40:c+40" validatorMessage="Date must be in the format MM/dd/yyyy">
+                            <f:convertDateTime type="date" dateStyle="short" />
+                            <f:validateRequired />
+                            <h:message for="dateAdded" style="color: red"/>
+                        </p:calendar>                        
+                    </h:panelGroup>                  
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" class="cartCss" >
+                    <h:commandButton  action="#{adminPortalController.addNewMenuItem()}" value="Add" class="btn btn-success" style="width: 100px"/>
+                    &nbsp;
+                    &nbsp;                  
+                    <h:link outcome="/admin/manageMenuItems.xhtml" value="Cancel" class="btn btn-primary" style="width: 100px" />
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </h:panelGroup>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </h:body>
+
+</html>

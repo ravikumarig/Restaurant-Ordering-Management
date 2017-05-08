@@ -1,0 +1,16 @@
+ALTER TABLE customer DROP FOREIGN KEY FK_customer_USERNAME
+ALTER TABLE cheque DROP FOREIGN KEY FK_cheque_MANAGER_ID
+ALTER TABLE cheque DROP FOREIGN KEY FK_cheque_CUSTOMER_ID
+ALTER TABLE lineitem DROP FOREIGN KEY FK_lineitem_ITEM_ID
+ALTER TABLE lineitem DROP FOREIGN KEY FK_lineitem_CUST_ID
+ALTER TABLE manager DROP FOREIGN KEY FK_manager_USERNAME
+ALTER TABLE sec_user_groups DROP FOREIGN KEY FK_sec_user_groups_USERNAME
+ALTER TABLE sec_user_groups DROP FOREIGN KEY FK_sec_user_groups_GROUPNAME
+DROP TABLE customer
+DROP TABLE security_user
+DROP TABLE cheque
+DROP TABLE lineitem
+DROP TABLE manager
+DROP TABLE menuitem
+DROP TABLE security_group
+DROP TABLE sec_user_groups

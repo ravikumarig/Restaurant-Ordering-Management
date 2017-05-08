@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="customer" required="true" type="edu.iit.sat.itmd4515.rindiragangaram.model.Customer" />
+        <cc:attribute name="readonly" required="false" type="java.lang.Boolean" default="true"/>
+        <cc:attribute name="updateAction" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="deleteAction" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="cancelOutcome" required="false" type="java.lang.String" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <h:form class="form-horizontal" style="text-align: left">
+
+            <h:panelGroup layout="block" class="form-group">
+                <h3>   <h:outputLabel style="width: 290px; text-align: left" for="customerId" value="Customer ID: #{cc.attrs.customer.customerId}" 
+                                      class="control-label col-sm-4" /> </h3>
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputHidden class="form-control"  id="customerId" value="#{cc.attrs.customer.customerId}" />
+                    <h:message for="customerId" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h3>   <h:outputLabel style="width: 500px; text-align: left" for="customerUName" value="Customer Username: #{cc.attrs.customer.user.userName}" 
+                                      class="control-label col-sm-4"/></h3>
+                <h:panelGroup class="col-sm-4">
+                    <h:inputHidden id="customerUName" value="#{cc.attrs.customer.user.userName}" class="form-control"/>
+                    <h:message for="customerId" style="color: red" />
+                </h:panelGroup>
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="customerName" value="Customer Name" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="customerName" value="#{cc.attrs.customer.customerName}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Customer Name is required">
+                        <f:validateRequired /> 
+                    </h:inputText>
+                    <h:message for="customerName" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="customerEmail" value="Customer Email" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputText class="form-control" id="customerEmail" value="#{cc.attrs.customer.customerEmail}" 
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                 validatorMessage="Email is required">
+                        <f:validateRequired />
+                    </h:inputText>
+                    <h:message for="customerEmail" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="customerPass" value="Customer Password" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >
+                    <h:inputSecret redisplay="true" class="form-control" id="customerPass" value="#{cc.attrs.customer.user.password}" 
+                                   readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                   validatorMessage="Password is required">
+                        <f:validateRequired />
+                    </h:inputSecret>
+                    <h:message for="customerPass" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group" >
+                <h:outputLabel for="customerDOB" value="Customer Date Of Birth" class="control-label col-sm-4" />
+                <h:panelGroup class="col-sm-4" >  
+                    <p:calendar id="customerDOB" value="#{cc.attrs.customer.dateOfBirth}" pattern="MM/dd/yyyy" 
+                                readonly="#{cc.attrs.readonly ? 'true' : 'false' }"
+                                navigator="true" yearRange="c-40:c+40" />
+                    <h:message for="customerDOB" style="color: red"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="cartCss" >
+                <h:commandButton  action="#{cc.attrs.updateAction}" value="Update" class="btn btn-success" style="width: 100px"/>
+                &nbsp;
+                &nbsp;
+                <h:commandButton  rendered="#{loginController.admin}" action="#{cc.attrs.deleteAction}" value="Delete" class="btn btn-success" style="width: 100px"/>
+                &nbsp;
+                &nbsp;
+                <h:link outcome="#{cc.attrs.cancelOutcome}" value="Cancel" class="btn btn-primary" style="width: 100px" />
+            </h:panelGroup>
+            <br/>
+        </h:form>
+
+    </cc:implementation>
+</html>

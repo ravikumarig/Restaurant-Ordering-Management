@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/restrictedAccessTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Customer Home-Page
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/style.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome Customer - #{loginController.remoteUser}        
+        <h4>Below are your profile details..</h4>
+
+        <!-- This is a table representation of customer details when logged in as a CUSTOMER and only that particular customer's details is displayed--> 
+        <h:dataTable rendered="#{loginController.customer}" 
+                     class="table table-hover table-responsive" 
+                     value="#{customerPortalController.customerByUsername}" 
+                     var="customer"
+                     style="background-color: #f9f9c7; border-radius: 1em">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer ID" />                        
+                </f:facet>
+                <h:outputText value="#{customer.customerId}" />                
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Customer Name" />
+                </f:facet>
+                <h:outputText value="#{customer.customerName}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{customer.customerEmail}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date of Birth" />
+                </f:facet>
+                <h:outputText value="#{customer.dateOfBirth}">
+                    <!-- Only date is needed -->
+                    <f:convertDateTime type="date" dateStyle="medium" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <h:form>
+                    <h:commandLink value="Update Profile" action="#{customerPortalController.goToUpdateCustomerProfilePage(customer)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+    </ui:define>
+
+</ui:composition>
