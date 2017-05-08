@@ -11,8 +11,11 @@ My Project uses the MVC framework, where I have used composite components for re
 **Specification**
 
 Framework: Java EE (MVC) 
+
 UI: Bootstrap, PrimeFaces, CSS, HTML, xHTML, JSF, jUnit
+
 Tools: Maven, Netbeans, Glassfish, MySQL Workbench
+
 Database: MySQL
 
 
